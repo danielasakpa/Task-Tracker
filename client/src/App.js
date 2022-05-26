@@ -11,7 +11,9 @@ import Footer from "./components/Footer"
 function App() {
 
    // to set and update the state of tasks
-    const [tasks, setTasks] = useState([])
+  const [tasks, setTasks] = useState([])
+
+  console.log(tasks)
 
   const [showAddTask, setShowAddTask] = useState(false)
 
@@ -24,39 +26,54 @@ function App() {
     getTasks();
   }, [])
 
+
+
+  
+
   // Fetch Tasks
       const fetchTasks = async () => {
-      const res = await fetch("http://localhost:5000/tasks")
+      const res = await fetch("https://react-server.danielasakpa.repl.co/tasks")
       const data = await res.json()
 
+        console.log(data)
      return data;
     }
+
+
+
+  
   // Fetch Task
       const fetchTask = async (id) => {
-      const res = await
-        fetch(`http://localhost:5000/tasks/${id}/`)
+      const res = await fetch(`https://react-server.danielasakpa.repl.co/tasks/${id}/`)
       const data = await res.json()
 
       return data;
 
     }
 
+
+
   
 
   // Add Task
   const addTask = async (task) => {
 
-    const res = await fetch('http://localhost:5000/tasks', {
+        console.log(task)
+    
+    const res = await fetch('https://react-server.danielasakpa.repl.co/tasks/storePost', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(task)
+           
     });
 
     const data = await res.json();
 
     setTasks([...tasks, data])
+
+    console.log(data)
     
     // to make a id with a random num
     // const id = Math.floor(Math.random() * 10000) + 1
@@ -67,16 +84,25 @@ function App() {
     // the update the state of the tasks array
     // setTasks([ ...tasks, newTask])
   }
+
+
+
+
+        
   
   // Delete Task
   const deleteTask = async (id) => {
-    await fetch(`http://localhost:5000/tasks/${id}/`, {
+    
+    await fetch(`https://react-server.danielasakpa.repl.co/tasks/${id}/`, {
     method: "DELETE",
   });
     // to loop through the tasks array and select the task that does not match the id
     setTasks(tasks.filter((task) => task.id !== id))
   }
 
+
+
+      
   // Toggle reminder
   const toggleReminder = async (id) => {
     
@@ -85,8 +111,8 @@ function App() {
     const updTask = {...taskToToggle, reminder: 
         !taskToToggle.reminder}
 
-    const res = await  fetch(`http://localhost:5000/tasks/${id}/`, {
-            method: 'PUT',
+    const res = await  fetch(`https://react-server.danielasakpa.repl.co/tasks/${id}/`, {
+            method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -102,6 +128,9 @@ function App() {
           )
       )
   }
+
+
+      
 
   return (
     <Router>

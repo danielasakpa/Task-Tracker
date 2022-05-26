@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const tasksCollections = mongoose.Schema({
-  title: String,
+  text: String,
   day: String,
   reminder: {
         type: Boolean,
